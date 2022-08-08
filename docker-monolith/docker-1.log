@@ -1,0 +1,14 @@
+REPOSITORY                               TAG               IMAGE ID       CREATED         SIZE
+astrviktor/ubuntu-tmp-file               latest            b25065e8f1bd   6 seconds ago   63.1MB
+nginx                                    latest            b692a91e4e15   4 days ago      142MB
+ubuntu                                   18.04             8d5df41c547b   4 days ago      63.1MB
+hello-world                              latest            feb5d9fea6a5   10 months ago   13.3kB
+
+На основе вывода команд
+  docker inspect <u_container_id / u_image_id>
+объясните чем отличается контейнер от образа
+
+У запущенного конкйнера есть дополнительная информация:
+- Информация про Stage, когда контейнер был запущен
+- Информация про сеть, IP адрес
+- Информация про Host Config
