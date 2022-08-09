@@ -71,3 +71,5 @@ docker push astrviktor/otus-reddit:1.0
 # запуск контейнера
 docker run --name reddit -d -p 9292:9292 astrviktor/otus-reddit:1.0
 ```
+
+
