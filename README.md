@@ -72,4 +72,39 @@ docker push astrviktor/otus-reddit:1.0
 docker run --name reddit -d -p 9292:9292 astrviktor/otus-reddit:1.0
 ```
 
+## ДЗ 14: Docker-образы. Микросервисы
+
+В процессе выполнения ДЗ было сделано
+
+1. Разбивка приложения reddit на отдельные образы
+2. Оптимизация образов по размеру
+3. Работа с Docker volume
+
+Команды сборки образов:
+
+```
+docker pull mongo:latest
+docker build -t astrviktor/post:1.0 ./post-py
+docker build -t astrviktor/comment:1.0 ./comment
+docker build -t astrviktor/ui:1.0 ./ui
+```
+
+Команды запуска контейнеров:
+
+```
+docker network create reddit
+docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db mongo:latest
+docker run -d --network=reddit --network-alias=post astrviktor/post:1.0
+docker run -d --network=reddit --network-alias=comment astrviktor/comment:1.0
+docker run -d --network=reddit -p 9292:9292 astrviktor/ui:1.0
+```
+
+Создание Docker volume:
+
+```
+docker volume create reddit_db
+docker run -d --network=reddit --network-alias=post_db \
+ --network-alias=comment_db -v reddit_db:/data/db mongo:latest
+```
+
 
