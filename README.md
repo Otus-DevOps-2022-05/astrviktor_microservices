@@ -108,3 +108,73 @@ docker run -d --network=reddit --network-alias=post_db \
 ```
 
 
+## ДЗ 15: Docker: сети, docker-compose
+
+В процессе выполнения ДЗ было сделано
+
+1. Изучение работы с сетями в docker
+2. Запуск через docker-compose
+3. Использование переменных для docker-compose
+
+Команды для проверки и сравнения сетевых интерфейсов
+
+```
+docker run -ti --rm --network none joffotron/docker-net-tools -c ifconfig
+docker run -ti --rm --network host joffotron/docker-net-tools -c ifconfig 
+docker run --network host -d nginx
+
+docker kill $(docker ps -q)
+```
+
+Создание bridge сети и запуск проекта в этой сети
+
+```
+docker network create reddit --driver bridge
+
+docker run -d --network=reddit mongo:latest
+docker run -d --network=reddit astrviktor/post:1.0
+docker run -d --network=reddit astrviktor/comment:1.0
+docker run -d --network=reddit -p 9292:9292 astrviktor/ui:1.0 
+
+docker run -d --network=reddit --network-alias=post_db --networkalias=comment_db mongo:latest
+docker run -d --network=reddit --network-alias=post astrviktor/post:1.0
+docker run -d --network=reddit --network-alias=comment astrviktor/comment:1.0
+docker run -d --network=reddit -p 9292:9292 astrviktor/ui:1.0
+
+docker kill $(docker ps -q)
+```
+
+Создание 2-x bridge сетей и запуск проекта в 2-х сетях
+
+```
+docker network create back_net --subnet=10.0.2.0/24
+docker network create front_net --subnet=10.0.1.0/24
+
+docker run -d --network=front_net -p 9292:9292 --name ui astrviktor/ui:1.0
+docker run -d --network=back_net --name comment astrviktor/comment:1.0
+docker run -d --network=back_net --name post astrviktor/post:1.0
+docker run -d --network=back_net --name mongo_db \
+ --network-alias=post_db --network-alias=comment_db mongo:latest 
+
+docker network connect front_net post
+docker network connect front_net comment
+ 
+docker kill $(docker ps -q)
+```
+
+Запуск через docker-compose
+
+```
+export USERNAME=astrviktor
+docker-compose up -d
+docker-compose ps
+docker-compose down
+```
+
+Поменять базовое имя проекта в docker-compose
+
+```
+docker-compose --project-name <name> up -d
+```
+
+
