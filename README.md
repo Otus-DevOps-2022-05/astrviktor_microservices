@@ -178,3 +178,42 @@ docker-compose --project-name <name> up -d
 ```
 
 
+## ДЗ 16: Устройство Gitlab CI. Построение процесса непрерывной поставки
+
+В процессе выполнения ДЗ было сделано
+
+1. Подготовка инсталляцию Gitlab CI в Docker
+2. Подготовка репозиторий с кодом приложения
+3. Подключение Gitlab Runner
+4. Описание для приложения этапов пайплайна
+5. Работа с окружениями
+
+Команда для создания VM для gitlab
+
+```
+# создание инстанса для gitlab
+
+yc compute instance create \
+ --name gitlab-host \
+ --cores=2 \
+ --core-fraction=5 \
+ --memory=4 \
+ --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1804-lts,size=50GB \
+ --network-interface subnet-name=app-subnet,nat-ip-version=ipv4 \
+ --zone=ru-central1-a \
+ --metadata serial-port-enable=1 \
+ --ssh-key ~/.ssh/yc-user.pub
+ 
+# подключение
+ssh yc-user@51.250.74.121
+
+# установка docker
+https://docs.docker.com/engine/install/ubuntu/
+```
+
+Запуск Gitlab
+```
+docker-compose up -d
+```
+
+
