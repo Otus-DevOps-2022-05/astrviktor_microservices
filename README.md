@@ -216,4 +216,53 @@ https://docs.docker.com/engine/install/ubuntu/
 docker-compose up -d
 ```
 
+## ДЗ 17: Введение в мониторинг. Системы мониторинга.
+
+В процессе выполнения ДЗ было сделано
+
+1. Подготовка окружения и запуск Prometheus
+2. Сборка своего образа Prometheus с prometheus.yml
+3. Добавление в docker-compose сервиса node-exporter
+4. Отправка образов в Docker Hub
+
+
+Команда для создания VM
+
+```
+yc compute instance create \
+ --name docker-host \
+ --cores=2 \
+ --core-fraction=5 \
+ --memory=2 \
+ --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1804-lts,size=15GB \
+ --network-interface subnet-name=app-subnet,nat-ip-version=ipv4 \
+ --zone=ru-central1-a \
+ --metadata serial-port-enable=1 \
+ --ssh-key ~/.ssh/yc-user.pub
+```
+
+Команда для запуска Prometheus в Docker
+
+```
+docker run --rm -p 9090:9090 -d --name prometheus prom/prometheus
+```
+
+Сборка своего образа Prometheus
+
+```
+export USER_NAME=astrviktor
+docker build -t $USER_NAME/prometheus .
+```
+
+Отправка образов в Docker Hub
+
+```
+docker login
+
+docker push $USER_NAME/ui
+docker push $USER_NAME/comment
+docker push $USER_NAME/post
+docker push $USER_NAME/prometheus
+```
+
 
