@@ -265,4 +265,53 @@ docker push $USER_NAME/post
 docker push $USER_NAME/prometheus
 ```
 
+## ДЗ 18: Логирование и распределенная трассировка.
+
+В процессе выполнения ДЗ было сделано
+
+1. Пересборка микросервисов с добавлением функционала логирования
+2. Подготовка docker-compose-logging.yml и образа fluentd
+3. Просмотр структурированных логов через Kibana
+4. Подключение Zipkin и просмотр трейсов
+
+Пересборка микросервисов
+
+```
+export USER_NAME=astrviktor
+cd ./src/ui && bash docker_build.sh && docker push $USER_NAME/ui
+cd ../post-py && bash docker_build.sh && docker push $USER_NAME/post
+cd ../comment && bash docker_build.sh && docker push $USER_NAME/comment
+```
+
+Команда для создания VM
+
+```
+yc compute instance create \
+ --name logging \
+ --cores=2 \
+ --core-fraction=5 \
+ --memory=4 \
+ --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-1804-lts,size=15GB \
+ --network-interface subnet-name=app-subnet,nat-ip-version=ipv4 \
+ --zone=ru-central1-a \
+ --metadata serial-port-enable=1 \
+ --ssh-key ~/.ssh/yc-user.pub
+```
+
+Сборка fluentd
+
+```
+cd logging/fluentd
+docker build -t $USER_NAME/fluentd .
+```
+
+Запуск сервисов и логирования
+
+```
+cd docker
+docker-compose -f docker-compose-logging.yml up -d
+docker-compose up -d
+```
+
+
 
