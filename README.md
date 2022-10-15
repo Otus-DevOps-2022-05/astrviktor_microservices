@@ -348,4 +348,21 @@ https://www.dmosk.ru/instruktions.php?object=kubernetes-ubuntu
 kubectl apply -f <filename>
 ```
 
+## ДЗ 20: Kubernetes. Запуск кластера и приложения. Модель безопасности
+
+В процессе выполнения ДЗ было сделано
+
+1. Установка Kubectl и Minikube
+2. Создание манифестов для объектов: Deployment, Service, Namespaces
+3. Активация и ознакомление с расширением Dashboard в Minikube
+4. Запуск приложения на реальном кластере Kubernetes в Yandex Cloud
+
+Выполнение команд из инструкции к ДЗ
+
+Скриншоты:
+
+![Alt text](./kubernetes/screenshots/yc-k8s-dev-pods.jpg?raw=true "yc-k8s-dev-pods")
+
+![Alt text](./kubernetes/screenshots/yc-k8s-service.jpg?raw=true "yc-k8s-service")
+
 
