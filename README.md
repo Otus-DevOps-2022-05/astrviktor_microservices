@@ -265,7 +265,7 @@ docker push $USER_NAME/post
 docker push $USER_NAME/prometheus
 ```
 
-## ДЗ 18: Логирование и распределенная трассировка.
+## ДЗ 18: Логирование и распределенная трассировка
 
 В процессе выполнения ДЗ было сделано
 
@@ -313,5 +313,56 @@ docker-compose -f docker-compose-logging.yml up -d
 docker-compose up -d
 ```
 
+
+## ДЗ 19: Введение в kubernetes
+
+В процессе выполнения ДЗ было сделано
+
+1. Запуск VM k8s-master и k8s-worker
+2. Установка на VM docker и компонентов k8s
+3. Создание кластера k8s, подключение worker-ноды
+4. Настройка Container Networking Interface
+5. Запуск манифестов
+
+
+Команда для создания VM k8s-master и k8s-worker
+
+```
+yc compute instance create \
+ --name k8s-master \
+ --cores=4 \
+ --core-fraction=5 \
+ --memory=4 \
+ --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-2004-lts,size=40GB \
+ --network-interface subnet-name=app-subnet,nat-ip-version=ipv4 \
+ --zone=ru-central1-a \
+ --metadata serial-port-enable=1 \
+ --ssh-key ~/.ssh/yc-user.pub
+```
+
+Для установки и настройки k8s использовалась инструкция:
+https://www.dmosk.ru/instruktions.php?object=kubernetes-ubuntu
+
+Запуск манифестов
+```
+kubectl apply -f <filename>
+```
+
+## ДЗ 20: Kubernetes. Запуск кластера и приложения. Модель безопасности
+
+В процессе выполнения ДЗ было сделано
+
+1. Установка Kubectl и Minikube
+2. Создание манифестов для объектов: Deployment, Service, Namespaces
+3. Активация и ознакомление с расширением Dashboard в Minikube
+4. Запуск приложения на реальном кластере Kubernetes в Yandex Cloud
+
+Выполнение команд из инструкции к ДЗ
+
+Скриншоты:
+
+![Alt text](./kubernetes/screenshots/yc-k8s-dev-pods.jpg?raw=true "yc-k8s-dev-pods")
+
+![Alt text](./kubernetes/screenshots/yc-k8s-service.jpg?raw=true "yc-k8s-service")
 
 
