@@ -366,3 +366,51 @@ kubectl apply -f <filename>
 ![Alt text](./kubernetes/screenshots/yc-k8s-service.jpg?raw=true "yc-k8s-service")
 
 
+## ДЗ 21: Kubernetes. Networks, Storages.
+
+В процессе выполнения ДЗ было сделано
+
+1. Установка и настройка Ingress
+2. Защита сервиса при помощи TLS
+3. Настройка Network Policy
+4. Создание хранилища для mongo
+
+Выполнение команд из инструкции к ДЗ
+
+Установка Ingress в YC
+
+https://cloud.yandex.ru/docs/managed-kubernetes/tutorials/ingress-cert-manager?from=int-console-help-center-or-nav
+
+Создание диска для Mongo в YC
+
+```
+yc compute disk create \
+ --zone=ru-central1-a \
+ --name k8s \
+ --size 4 \
+ --description "disk for k8s"
+```
+
+Просмотр дисков
+
+```
+yc compute disk list
+```
+
+## ДЗ 22: CI/CD в Kubernetes
+
+В процессе выполнения ДЗ было сделано
+
+1. Установка Helm 3
+2. Создание и параметризация Charts для приложений
+3. Создание единого Chart reddit
+4. Установка GitLab в k8s
+5. Настройка CI
+
+Выполнение команд из инструкции к ДЗ
+
+Работа сразу с Helm 3
+
+
+
+
